@@ -131,11 +131,8 @@ class State:
         return headers, rows
 
 
-def main(prog=None):
-    if prog:
-        prog = parse_code(prog)
-    else:
-        prog = read_program()
+def main(prog):
+    prog = parse_code(prog)
     # print("\n".join(str(x) for x in prog))
 
     line_index = 0
@@ -222,13 +219,3 @@ def main(prog=None):
 
 def parse_code(prog):
     return [match(a) for a in prog.split("\n")]
-
-
-def read_program():
-    prog = []
-    while True:
-        raw = input().split("\n")
-        for a in raw:
-            if a == "END":
-                return prog
-            prog.append(match(a))
