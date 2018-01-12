@@ -58,7 +58,7 @@ def expression_evaluate(expression, var_dict):
             part = canonical_forms[part.lower()]
         processed += part + " "
 
-    return eval(processed, {}, var_dict)
+    return eval(processed, {"__builitins__": None}, var_dict)
 
 
 def skip_block(line_index, prog, enter_dels, exit_dels, reverse=False):
