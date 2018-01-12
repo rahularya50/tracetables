@@ -1,3 +1,4 @@
+# coding=utf-8
 from tabulate import tabulate
 
 EXPR = "expression"
@@ -122,7 +123,7 @@ class State:
 
     def print_trace_table(self):
         headers, rows = self.gen_trace_table()
-        print(tabulate(rows, headers=headers))
+        return tabulate(rows, headers=headers, tablefmt="html")
 
     def gen_trace_table(self):
         headers = sorted(i for i in self.__objects if i != "Display") + ["Display"]
@@ -131,7 +132,9 @@ class State:
 
 
 def main(prog=None):
-    if not prog:
+    if prog:
+        prog = parse_code(prog)
+    else:
         prog = read_program()
     # print("\n".join(str(x) for x in prog))
 
@@ -214,7 +217,11 @@ def main(prog=None):
             err = e
             break
 
-    return err, var_states.gen_trace_table()
+    return err, var_states
+
+
+def parse_code(prog):
+    return [match(a) for a in prog.split("\n")]
 
 
 def read_program():
